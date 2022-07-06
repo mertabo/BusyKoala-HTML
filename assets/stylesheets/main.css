@@ -87,13 +87,15 @@ body {
   padding-top: 77px;
 }
 a,
-.fa {
+.fa,
+.btn-text {
   color: #58abdd;
 }
 a {
   text-decoration: none;
 }
-a:hover {
+a:hover,
+.btn-text:hover {
   color: #488fbb;
 }
 .active-link {
@@ -122,6 +124,10 @@ h2 {
   line-height: 36px;
   font-weight: 900;
 }
+h4 {
+  font-size: 24px;
+  line-height: 32px;
+}
 h5 {
   text-transform: uppercase;
 }
@@ -130,12 +136,9 @@ h5 {
   background-color: #f5f5f5;
   border: 0;
 }
-.text-secondary {
-  color: #979797;
-}
-aside {
+aside,
+.middle-container {
   height: calc(100vh - 77px);
-  position: fixed;
   padding: 15px;
 }
 aside .card {
@@ -252,8 +255,7 @@ footer li {
 */
 .sidebar-left {
   border-right: 1px solid #dee2e6;
-  width: 20vw;
-  left: 0;
+  width: 280px;
 }
 .sdbr-l-content {
   height: calc(100% - 35.95px - 15px - 15px - 50px);
@@ -270,9 +272,21 @@ footer li {
 */
 .sidebar-right {
   border-left: 1px solid #dee2e6;
-  width: 8vw;
-  right: 0;
+  width: 140px;
 }
 .sidebar-right .card {
   align-items: center;
+}
+
+/*
+  ================
+  Middle container
+  ================
+*/
+.middle-container {
+  width: calc(100% - 280px - 10vw);
+  overflow-wrap: break-word;
+}
+.mid-content-workspace {
+  height: calc(100% - 38px);
 }
