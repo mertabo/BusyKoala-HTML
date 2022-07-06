@@ -290,3 +290,28 @@ footer li {
 .mid-content-workspace {
   height: calc(100% - 38px);
 }
+
+/*
+  ================
+  Table
+  ================
+*/
+table {
+  table-layout: fixed;
+}
+thead {
+  font-weight: 700;
+}
+td {
+  height: 100px;
+}
+td > p {
+  background-color: yellow;
+  font-size: 14px;
+  padding: 5px;
+  margin-bottom: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
