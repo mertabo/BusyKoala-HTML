@@ -124,12 +124,17 @@ h2 {
   line-height: 36px;
   font-weight: 900;
 }
-h4 {
+h3 {
   font-size: 24px;
   line-height: 32px;
 }
-h5 {
+h4 {
   text-transform: uppercase;
+}
+h6,
+thead {
+  font-weight: 700;
+  color: #58abdd
 }
 .form-control,
 .active-card {
@@ -146,6 +151,13 @@ aside .card {
 }
 .card {
   border: 0;
+}
+.card button {
+  border: 1px solid #58abdd;
+}
+.card button:hover {
+  background-color: #58abdd;
+  color: white;
 }
 .scrollable-container {
   overflow-y: auto;
@@ -286,6 +298,7 @@ footer li {
 .middle-container {
   width: calc(100% - 280px - 10vw);
   overflow-wrap: break-word;
+  background: #f5f5f5;
 }
 .mid-content-workspace {
   height: calc(100% - 38px);
@@ -293,17 +306,29 @@ footer li {
 
 /*
   ================
-  Table
+  Time ins
+  ================
+*/
+.mid-content-workspace .card {
+  box-shadow: 0 3px 10px 2px #0000001a;
+  margin-bottom: 10px;
+}
+
+/*
+  ================
+  Calendar
   ================
 */
 table {
   table-layout: fixed;
 }
-thead {
-  font-weight: 700;
-}
 td {
   height: 100px;
+}
+td > h6 {
+  color: black;
+  font-weight: 300;
+  font-size: 18px;
 }
 td > p {
   background-color: yellow;
