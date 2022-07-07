@@ -1,5 +1,16 @@
-function endSession() {
-  console.log("Session has ended. Attendees can no longer time in.");
+function toTitleCase(str) {
+  return str.split(' ')
+   .map(w => w[0].toUpperCase() + w.substring(1).toLowerCase())
+   .join(' ');
+}
+
+// Initialize bootstrap toasts
+function initToasts() {
+  document.getElementById("timeButton").onclick = function() {
+    const toast = document.getElementById("liveToast");
+    const bsToast = new bootstrap.Toast(toast);
+    bsToast.show();
+  }
 }
 
 function getOwnWorkspace() {
@@ -39,9 +50,9 @@ function getOwnWorkspace() {
   
   // Configure the button whether "+ Time in" or "End session"
   const timeBtn = document.getElementById("timeButton");
-  timeBtn.onclick = endSession;
   timeBtn.innerText = "End session";
-
+  initToasts();
+  
   getToday();
 }
 
@@ -116,12 +127,6 @@ function getToday() {
     // Append card to DOM
     container.appendChild(card);
   });
-}
-
-function toTitleCase(str) {
-  return str.split(' ')
-   .map(w => w[0].toUpperCase() + w.substring(1).toLowerCase())
-   .join(' ');
 }
 
 function getAll() {

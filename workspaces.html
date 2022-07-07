@@ -99,6 +99,18 @@
           <ul class="nav nav-pills" id="containerHeader">
             <li class="nav-item ms-auto">
               <button class="btn btn-text" id="timeButton">+ Time in</button>
+              
+              <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+                <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+                  <div class="toast-header">
+                    <strong class="me-auto">Ended session</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                  </div>
+                  <div class="toast-body">
+                    Session has ended. Attendees can no longer time in.
+                  </div>
+                </div>
+              </div>
             </li>
           </ul>
           <div class="mid-content-workspace">

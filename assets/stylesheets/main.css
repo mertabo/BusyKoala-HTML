@@ -96,12 +96,12 @@ a {
   cursor: pointer;
 }
 a:hover,
-.btn-text:hover {
+.btn-text:hover,
+.active-link {
   color: #488fbb;
 }
 .active-link {
   font-weight: 900;
-  color: #488fbb;
 }
 .btn-cta {
   color: white;
@@ -110,7 +110,8 @@ a:hover,
   text-transform: uppercase;
   padding: 0.8em;
 }
-.btn-cta:hover {
+.btn-cta:hover,
+#liveToast {
   color: white;
   border: 1px solid #488fbb;
   background-color: #488fbb;
