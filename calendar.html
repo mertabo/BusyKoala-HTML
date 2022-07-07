@@ -46,20 +46,20 @@
                   <input type="text" id="title" class="form-control" required>
                 </div>
                 <div class="mb-3">
-                  <label for="title" class="form-label">Date</label>
+                  <label for="date" class="form-label">Date</label>
                   <input type="date" class="form-control" id="date" required>
                 </div>
                 <div class="mb-3">
-                  <label for="title" class="form-label">Time</label>
+                  <label for="time" class="form-label">Time</label>
                   <input type="time" class="form-control" id="time">
                 </div>
                 <div class="mb-3">
-                  <label for="title" class="form-label">Workplace</label>
+                  <label for="workplace" class="form-label">Workplace</label>
                   <input type="text" class="form-control" id="workplace">
                 </div>
               </div>
             </div>
-            <button type="submit" class="btn btn-cta w-100">Add event</button>
+            <button class="btn btn-cta w-100" onclick="postEvent()">Add event</button>
           </form>
         </aside>
         
@@ -77,130 +77,7 @@
                   <th>Sat</th>
                 </tr>
               </thead>
-                <tbody class="scrollable-container">
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                      <h6>1</h6>
-                    </td>
-                    <td>
-                      <h6>2</h6>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <h6>2</h6>
-                    </td>
-                    <td>
-                      <h6>3</h6>
-                    </td>
-                    <td>
-                      <h6>4</h6>
-                    </td>
-                    <td>
-                      <h6>5</h6>
-                    </td>
-                    <td>
-                      <h6>6</h6>
-                    </td>
-                    <td>
-                      <h6>7</h6>
-                    </td>
-                    <td>
-                      <h6>8</h6>
-                      <p>Sesh (10AM @ Exist Software Labs, Inc.)</p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <h6>9</h6>
-                    </td>
-                    <td>
-                      <h6>10</h6>
-                    </td>
-                    <td>
-                      <h6>11</h6>
-                    </td>
-                    <td>
-                      <h6>12</h6>
-                    </td>
-                    <td>
-                      <h6>13</h6>
-                      <p>Shopping</p>
-                    </td>
-                    <td>
-                      <h6>14</h6>
-                    </td>
-                    <td>
-                      <h6>15</h6>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <h6>16</h6>
-                    </td>
-                    <td>
-                      <h6>17</h6>
-                    </td>
-                    <td>
-                      <h6>18</h6>
-                      <p>Birthday</p>
-                    </td>
-                    <td>
-                      <h6>19</h6>
-                      <p>Gala</p>
-                      <p>Swimming</p>
-                    </td>
-                    <td>
-                      <h6>20</h6>
-                    </td>
-                    <td>
-                      <h6>21</h6>
-                    </td>
-                    <td>
-                      <h6>22</h6>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <h6>23</h6>
-                    </td>
-                    <td>
-                      <h6>24</h6>
-                    </td>
-                    <td>
-                      <h6>25</h6>
-                    </td>
-                    <td>
-                      <h6>26</h6>
-                    </td>
-                    <td>
-                      <h6>27</h6>
-                    </td>
-                    <td>
-                      <h6>28</h6>
-                    </td>
-                    <td>
-                      <h6>29</h6>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <h6>30</h6>
-                    </td>
-                    <td>
-                      <h6>31</h6>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
+                <tbody class="scrollable-container" id="calendarBody">
                 </tbody>
             </table>
           </div>
@@ -274,6 +151,8 @@
     </div>
 
     <!-- Scripts -->
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="assets/scripts/calendar.js"></script>
   </body>
 </html>
