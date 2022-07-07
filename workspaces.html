@@ -41,55 +41,7 @@
             <input type="text" class="form-control rounded-pill" placeholder="Search">
           </form>
           <div class="sdbr-l-content">
-            <div class="scrollable-container">
-              <button class="card active-card">
-                <div class="card-body">
-                  <h5 class="card-title">Exist Software Labs, Inc.</h5>
-                  <p class="card-text text-secondary">Mon-Fri</p>
-                </div>
-              </button>
-              <button class="card" onclick="getOwnWorkspace()">
-                <div class="card-body">
-                  <h5 class="card-title">My Session</h5>
-                  <p class="card-text text-secondary">Tue, Thu</p>
-                </div>
-              </button>
-              <button class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Exist Software Labs, Inc.</h5>
-                  <p class="card-text text-secondary">Mon-Fri</p>
-                </div>
-              </button>
-              <button class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Exist Software Labs, Inc.</h5>
-                  <p class="card-text text-secondary">Mon-Fri</p>
-                </div>
-              </button>
-              <button class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Exist Software Labs, Inc.</h5>
-                  <p class="card-text text-secondary">Mon-Fri</p>
-                </div>
-              </button>
-              <button class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Exist Software Labs, Inc.</h5>
-                  <p class="card-text text-secondary">Mon-Fri</p>
-                </div>
-              </button>
-              <button class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Exist Software Labs, Inc.</h5>
-                  <p class="card-text text-secondary">Mon-Fri</p>
-                </div>
-              </button>
-              <button class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Exist Software Labs, Inc.</h5>
-                  <p class="card-text text-secondary">Mon-Fri</p>
-                </div>
-              </button>
+            <div class="scrollable-container" id="workspacesContainer">
             </div>
           </div>
           <button class="btn btn-cta w-100">Create workspace</button>
@@ -99,7 +51,7 @@
           <ul class="nav nav-pills" id="containerHeader">
             <li class="nav-item ms-auto">
               <button class="btn btn-text" id="timeButton">+ Time in</button>
-              
+
               <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
                 <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
                   <div class="toast-header">

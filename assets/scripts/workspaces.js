@@ -1,3 +1,72 @@
+const USER = "ericka";
+
+// Dummy data
+const attendeesToday = [
+  {name: "Millie Bobby Brown", time: ["9:12 AM"], duration: "0mins"},
+  {name: "Taylor Swift", time: ["9:12 AM"], duration: "0mins"},
+  {name: "Gaten Matarazzo", time: ["9:11 AM - 9:54 AM"], duration: "0mins"},
+  {name: "Joe Keery", time: ["9:10 AM", "9:00 AM - 9:05 AM"], duration: "0mins"},
+];
+
+const workspaces = [
+  {
+    name: "Exist Software Labs, Inc.",
+    owner: "exist",
+    when: "Mon-Fri",
+    data: [
+      {
+        month: 6,
+        date: 3,
+        time: [
+          {name: "Millie Bobby Brown", time: ["9:05 AM - 10:30 AM"], duration: "1hr 25mins"},
+          {name: "Taylor Swift", time: ["9:04 AM - 10:04 AM"], duration: "1hr"},
+          {name: "Joe Keery", time: ["10:00 AM - 10:30 AM", "9:02 AM - 9:48 AM"], duration: "1hr 16mins"},
+          {name: "Gaten Matarazzo", time: ["8:59 AM - 10:30 AM"], duration: "1hr 31mins"},
+        ]
+      },
+      {
+        month: 6,
+        date: 2,
+        time: [
+          {name: "Millie Bobby Brown", time: ["9:05 AM - 10:30 AM"], duration: "1hr 25mins"},
+          {name: "Taylor Swift", time: ["9:04 AM - 10:04 AM"], duration: "1hr"},
+          {name: "Joe Keery", time: ["9:02 AM - 9:48 AM"], duration: "46mins"},
+          {name: "Gaten Matarazzo", time: ["8:59 AM - 10:30 AM"], duration: "1hr 31mins"},
+        ]
+      },
+      {
+        month: 5,
+        date: 3,
+        time: [
+          {name: "Millie Bobby Brown", time: ["9:05 AM - 10:30 AM"], duration: "1hr 25mins"},
+          {name: "Taylor Swift", time: ["9:04 AM - 10:04 AM"], duration: "1hr"},
+          {name: "Joe Keery", time: ["9:02 AM - 9:48 AM"], duration: "46mins"},
+          {name: "Gaten Matarazzo", time: ["8:59 AM - 10:30 AM"], duration: "1hr 31mins"},
+        ]
+      },
+    ]
+  },
+  {
+    name: "My Session",
+    owner: "ericka",
+    when: "Tue, Thu",
+    data: [
+      {
+        month: 6,
+        date: 3,
+        time: [
+          {name: "Millie Bobby Brown", time: ["9:05 AM - 10:30 AM"], duration: "1hr 25mins"},
+          {name: "Taylor Swift", time: ["9:04 AM - 10:04 AM"], duration: "1hr"},
+          {name: "Joe Keery", time: ["9:02 AM - 9:48 AM"], duration: "46mins"},
+          {name: "Gaten Matarazzo", time: ["8:59 AM - 10:30 AM"], duration: "1hr 31mins"},
+        ]
+      },
+      
+    ]
+  },
+];
+
+
 function toTitleCase(str) {
   return str.split(' ')
    .map(w => w[0].toUpperCase() + w.substring(1).toLowerCase())
@@ -11,6 +80,73 @@ function initToasts() {
     const bsToast = new bootstrap.Toast(toast);
     bsToast.show();
   }
+}
+
+// Returns the currently selected month
+function getSelectedMonth() {
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  let selectedMonth = document.getElementsByClassName("active-card")[0];
+  selectedMonth = months.indexOf(toTitleCase(selectedMonth.innerText));
+
+  return selectedMonth;
+}
+
+function getWorkspaces() {
+  const container = document.getElementById("workspacesContainer");
+  
+  // Ensure container is empty
+  container.innerHTML = "";
+
+  workspaces.forEach(workspace => {
+    // Create card
+    const card = document.createElement("button");
+    card.className = "card";
+    card.onclick = USER === workspace.owner ? getOwnWorkspace : getOtherWorkspace;
+    
+    // Create card-body
+    const cardBody = document.createElement("div");
+    cardBody.className = "card-body";
+    
+    card.appendChild(cardBody);
+    
+    // Create title
+    const title = document.createElement("h5");
+    title.className = "card-title";
+    title.innerText = workspace.name;
+
+    // Create subtitle
+    const subtitle = document.createElement("p");
+    subtitle.className = "card-text text-secondary";
+    subtitle.innerText = workspace.when;
+    
+    cardBody.append(title, subtitle);
+
+    container.appendChild(card);
+  });
+
+  container.firstChild.className = "card active-card";
+  container.firstChild.click();
+}
+
+function getOtherWorkspace() {
+  const header = document.getElementById("containerHeader");
+
+  // Ensure that the elements are not repeated if function is repeatedly called
+  if (header.childElementCount > 1) {
+    header.removeChild(header.firstChild);
+    header.removeChild(header.firstChild);
+  }
+
+  // Configure the button whether "Time in" or "End session"
+  const timeBtn = document.getElementById("timeButton");
+  timeBtn.innerText = "Time in";
+  timeBtn.onclick = timeIn;
+  
+  getToday();
+}
+
+function timeIn() {
+  console.log("timed");
 }
 
 function getOwnWorkspace() {
@@ -63,14 +199,7 @@ function getToday() {
   container.innerHTML = "";
 
   // Fill the container with data
-  const dummyData = [
-    {name: "Millie Bobby Brown", time: ["9:12 AM"], duration: "0mins"},
-    {name: "Taylor Swift", time: ["9:12 AM"], duration: "0mins"},
-    {name: "Gaten Matarazzo", time: ["9:11 AM - 9:54 AM"], duration: "0mins"},
-    {name: "Joe Keery", time: ["9:10 AM", "9:00 AM - 9:05 AM"], duration: "0mins"},
-  ];
-
-  dummyData.forEach (data => {
+  attendeesToday.forEach (data => {
     // Create card
     const card = document.createElement("div");
     card.className = "card";
@@ -143,64 +272,9 @@ function getAll() {
   // Get selected workspace
   const workspace = options[0].innerText.split("\n")[0];
 
-  // Dummy data
-  const dummyData = [
-    {
-      name: "Exist Software Labs, Inc.",
-      data: [
-        {
-          month: 6,
-          date: 3,
-          time: [
-            {name: "Millie Bobby Brown", time: ["9:05 AM - 10:30 AM"], duration: "1hr 25mins"},
-            {name: "Taylor Swift", time: ["9:04 AM - 10:04 AM"], duration: "1hr"},
-            {name: "Joe Keery", time: ["10:00 AM - 10:30 AM", "9:02 AM - 9:48 AM"], duration: "1hr 16mins"},
-            {name: "Gaten Matarazzo", time: ["8:59 AM - 10:30 AM"], duration: "1hr 31mins"},
-          ]
-        },
-        {
-          month: 6,
-          date: 2,
-          time: [
-            {name: "Millie Bobby Brown", time: ["9:05 AM - 10:30 AM"], duration: "1hr 25mins"},
-            {name: "Taylor Swift", time: ["9:04 AM - 10:04 AM"], duration: "1hr"},
-            {name: "Joe Keery", time: ["9:02 AM - 9:48 AM"], duration: "46mins"},
-            {name: "Gaten Matarazzo", time: ["8:59 AM - 10:30 AM"], duration: "1hr 31mins"},
-          ]
-        },
-        {
-          month: 5,
-          date: 3,
-          time: [
-            {name: "Millie Bobby Brown", time: ["9:05 AM - 10:30 AM"], duration: "1hr 25mins"},
-            {name: "Taylor Swift", time: ["9:04 AM - 10:04 AM"], duration: "1hr"},
-            {name: "Joe Keery", time: ["9:02 AM - 9:48 AM"], duration: "46mins"},
-            {name: "Gaten Matarazzo", time: ["8:59 AM - 10:30 AM"], duration: "1hr 31mins"},
-          ]
-        },
-      ]
-    },
-    {
-      name: "My Session",
-      data: [
-        {
-          month: 6,
-          date: 3,
-          time: [
-            {name: "Millie Bobby Brown", time: ["9:05 AM - 10:30 AM"], duration: "1hr 25mins"},
-            {name: "Taylor Swift", time: ["9:04 AM - 10:04 AM"], duration: "1hr"},
-            {name: "Joe Keery", time: ["9:02 AM - 9:48 AM"], duration: "46mins"},
-            {name: "Gaten Matarazzo", time: ["8:59 AM - 10:30 AM"], duration: "1hr 31mins"},
-          ]
-        },
-        
-      ]
-    },
-  ];
-
   // Get data from dummy data
   // Filter by workspace
-  let workspaceData = dummyData.filter(data => {
+  let workspaceData = workspaces.filter(data => {
     return data.name === workspace;
   })[0].data;
 
@@ -295,3 +369,22 @@ function getAll() {
     container.appendChild(card);
   });
 }
+
+
+// Updates UI of left sidebar
+document.querySelectorAll(".sidebar-left .card").forEach((card) => {
+  card.onclick = function() {
+    document.querySelector(".sidebar-left .active-card").className = "card";
+    card.className = "card active-card";
+  }
+})
+
+// Updates UI of right sidebar
+document.querySelectorAll(".sidebar-right .card").forEach((card) => {
+  card.onclick = function() {
+    document.querySelector(".sidebar-right .active-card").className = "card";
+    card.className = "card active-card";
+  }
+})
+
+getWorkspaces();
