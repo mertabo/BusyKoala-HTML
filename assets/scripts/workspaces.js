@@ -1,5 +1,6 @@
 const USER = "ericka";
-
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+ 
 // Dummy data
 const attendeesToday = [
   {name: "Millie Bobby Brown", time: ["9:12 AM"], duration: "0mins"},
@@ -18,30 +19,42 @@ const workspaces = [
         month: 6,
         date: 3,
         time: [
-          {name: "Millie Bobby Brown", time: ["9:05 AM - 10:30 AM"], duration: "1hr 25mins"},
-          {name: "Taylor Swift", time: ["9:04 AM - 10:04 AM"], duration: "1hr"},
-          {name: "Joe Keery", time: ["10:00 AM - 10:30 AM", "9:02 AM - 9:48 AM"], duration: "1hr 16mins"},
-          {name: "Gaten Matarazzo", time: ["8:59 AM - 10:30 AM"], duration: "1hr 31mins"},
+          {name: "Millie Bobby Brown", user: "millaeh",time: ["9:05 AM - 10:30 AM"], duration: "1hr 25mins"},
+          {name: "Taylor Swift", user: "taytay",time: ["9:04 AM - 10:04 AM"], duration: "1hr"},
+          {name: "Joe Keery", user: "steve",time: ["10:00 AM - 10:30 AM", "9:02 AM - 9:48 AM"], duration: "1hr 16mins"},
+          {name: "Gaten Matarazzo", user: "dusty-bun",time: ["8:59 AM - 10:30 AM"], duration: "1hr 31mins"},
+          {name: "Ericka Tabo", user: "ericka",time: ["10:46 AM", "8:59 AM - 10:30 AM"], duration: "1hr 31mins"},
         ]
       },
       {
         month: 6,
         date: 2,
         time: [
-          {name: "Millie Bobby Brown", time: ["9:05 AM - 10:30 AM"], duration: "1hr 25mins"},
-          {name: "Taylor Swift", time: ["9:04 AM - 10:04 AM"], duration: "1hr"},
-          {name: "Joe Keery", time: ["9:02 AM - 9:48 AM"], duration: "46mins"},
-          {name: "Gaten Matarazzo", time: ["8:59 AM - 10:30 AM"], duration: "1hr 31mins"},
+          {name: "Millie Bobby Brown", user: "millaeh",time: ["9:05 AM - 10:30 AM"], duration: "1hr 25mins"},
+          {name: "Taylor Swift", user: "taytay",time: ["9:04 AM - 10:04 AM"], duration: "1hr"},
+          {name: "Joe Keery", user: "steve",time: ["10:00 AM - 10:30 AM", "9:02 AM - 9:48 AM"], duration: "1hr 16mins"},
+          {name: "Gaten Matarazzo", user: "dusty-bun",time: ["8:59 AM - 10:30 AM"], duration: "1hr 31mins"},
+          {name: "Ericka Tabo", user: "ericka",time: ["10:00 AM - 10:30 AM", "9:02 AM - 9:48 AM"], duration: "1hr 16mins"},
+        ]
+      },
+      {
+        month: 6,
+        date: 1,
+        time: [
+          {name: "Millie Bobby Brown", user: "millaeh",time: ["9:05 AM - 10:30 AM"], duration: "1hr 25mins"},
+          {name: "Taylor Swift", user: "taytay",time: ["9:04 AM - 10:04 AM"], duration: "1hr"},
+          {name: "Joe Keery", user: "steve",time: ["10:00 AM - 10:30 AM", "9:02 AM - 9:48 AM"], duration: "1hr 16mins"},
+          {name: "Gaten Matarazzo", user: "dusty-bun",time: ["8:59 AM - 10:30 AM"], duration: "1hr 31mins"},
         ]
       },
       {
         month: 5,
         date: 3,
         time: [
-          {name: "Millie Bobby Brown", time: ["9:05 AM - 10:30 AM"], duration: "1hr 25mins"},
-          {name: "Taylor Swift", time: ["9:04 AM - 10:04 AM"], duration: "1hr"},
-          {name: "Joe Keery", time: ["9:02 AM - 9:48 AM"], duration: "46mins"},
-          {name: "Gaten Matarazzo", time: ["8:59 AM - 10:30 AM"], duration: "1hr 31mins"},
+          {name: "Millie Bobby Brown", user: "millaeh",time: ["9:05 AM - 10:30 AM"], duration: "1hr 25mins"},
+          {name: "Taylor Swift", user: "taytay",time: ["9:04 AM - 10:04 AM"], duration: "1hr"},
+          {name: "Joe Keery", user: "steve",time: ["10:00 AM - 10:30 AM", "9:02 AM - 9:48 AM"], duration: "1hr 16mins"},
+          {name: "Gaten Matarazzo", user: "dusty-bun",time: ["8:59 AM - 10:30 AM"], duration: "1hr 31mins"},
         ]
       },
     ]
@@ -53,12 +66,12 @@ const workspaces = [
     data: [
       {
         month: 6,
-        date: 3,
+        date: 31,
         time: [
-          {name: "Millie Bobby Brown", time: ["9:05 AM - 10:30 AM"], duration: "1hr 25mins"},
-          {name: "Taylor Swift", time: ["9:04 AM - 10:04 AM"], duration: "1hr"},
-          {name: "Joe Keery", time: ["9:02 AM - 9:48 AM"], duration: "46mins"},
-          {name: "Gaten Matarazzo", time: ["8:59 AM - 10:30 AM"], duration: "1hr 31mins"},
+          {name: "Millie Bobby Brown", user: "millaeh",time: ["9:05 AM - 10:30 AM"], duration: "1hr 25mins"},
+          {name: "Taylor Swift", user: "taytay",time: ["9:04 AM - 10:04 AM"], duration: "1hr"},
+          {name: "Joe Keery", user: "steve",time: ["10:00 AM - 10:30 AM", "9:02 AM - 9:48 AM"], duration: "1hr 16mins"},
+          {name: "Gaten Matarazzo", user: "dusty-bun",time: ["8:59 AM - 10:30 AM"], duration: "1hr 31mins"},
         ]
       },
       
@@ -82,11 +95,15 @@ function initToasts() {
   }
 }
 
+// Returns the currently selected workplace
+function getSelectedWorkplace() {
+  return document.getElementsByClassName("active-card")[0].innerText.split("\n")[0];
+}
+
 // Returns the currently selected month
 function getSelectedMonth() {
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  let selectedMonth = document.getElementsByClassName("active-card")[0];
-  selectedMonth = months.indexOf(toTitleCase(selectedMonth.innerText));
+  let selectedMonth = document.getElementsByClassName("active-card")[1];
+  selectedMonth = MONTHS.indexOf(toTitleCase(selectedMonth.innerText));
 
   return selectedMonth;
 }
@@ -101,7 +118,11 @@ function getWorkspaces() {
     // Create card
     const card = document.createElement("button");
     card.className = "card";
-    card.onclick = USER === workspace.owner ? getOwnWorkspace : getOtherWorkspace;
+    card.onclick = function() {
+      document.querySelector(".sidebar-left .active-card").className = "card";
+      card.className = "card active-card";
+      USER === workspace.owner ? getOwnWorkspace() : getOtherWorkspace();
+    } 
     
     // Create card-body
     const cardBody = document.createElement("div");
@@ -120,7 +141,6 @@ function getWorkspaces() {
     subtitle.innerText = workspace.when;
     
     cardBody.append(title, subtitle);
-
     container.appendChild(card);
   });
 
@@ -136,16 +156,120 @@ function getOtherWorkspace() {
     header.removeChild(header.firstChild);
     header.removeChild(header.firstChild);
   }
-
+  
   // Configure the button whether "Time in" or "End session"
   const timeBtn = document.getElementById("timeButton");
   timeBtn.innerText = "Time in";
   timeBtn.onclick = timeIn;
   
-  getToday();
+  const container = document.getElementById("midContentWSContainer");
+  
+  // Clear container by removing all cards
+  container.innerHTML = "";
+
+  // Get selected workspace
+  const workspace = getSelectedWorkplace();
+
+  // Get selected month
+  const month = getSelectedMonth();
+
+  // Get the data of selected workspace
+  let workspaceData = workspaces.filter(data => {
+    return data.name === workspace;
+  })[0].data;
+
+  // Filter the data by selected month
+  workspaceData = workspaceData.filter(data => {
+    return data.month === month;
+  });
+
+  workspaceData.forEach(data => {
+    // Check if user has data under date
+    const hasData = data.time.filter(data => {
+      return data.user === USER;
+    })[0];
+    
+    // No data
+    if (!hasData) return;
+    
+    // Create card
+    const card = document.createElement("div");
+    card.className = "card";
+    
+    const cardBody = document.createElement("div");
+    cardBody.className = "card-body";
+    
+    card.appendChild(cardBody);
+  
+    // Add name to card
+    const name = document.createElement("h6");
+    name.className = "card-title";
+    name.innerText = `${MONTHS[data.month]} ${data.date}, ${new Date().getFullYear()}`;
+  
+    cardBody.appendChild(name);
+  
+    // Create row
+    const row = document.createElement("div");
+    row.className = "row text-secondary";
+  
+    cardBody.appendChild(row);
+  
+    // Create column for time in, time out and duration
+    const timeInHeader = document.createElement("p");
+    timeInHeader.className = "col-12 col-lg-4";
+    timeInHeader.innerText = "Time in"
+    
+    const timeOutHeader = document.createElement("p");
+    timeOutHeader.className = "col-12 col-lg-4";
+    timeOutHeader.innerText = "Time out"
+
+    const durationHeader = document.createElement("p");
+    durationHeader.className = "col-12 col-lg-4";
+    durationHeader.innerText = `Duration: ${hasData.duration}`;
+  
+    row.append(timeInHeader, timeOutHeader, durationHeader);
+
+    // Fill in columns with data
+    hasData.time.forEach(data => {
+      const timeInOut = data.split(" - ");
+
+      const row = document.createElement("div");
+      row.className = "row text-secondary";
+
+      const timeIn = document.createElement("p");
+      timeIn.className = "col-12 col-lg-4";
+      timeIn.innerText = timeInOut[0];
+
+      const timeOut = document.createElement("p");
+      timeOut.className = "col-12 col-lg-4";
+      
+      // Check if there is an ongoing session that has not been timed out yet
+      if (timeInOut[1]) {
+        timeOut.innerText = timeInOut[1];
+      } else {
+        document.getElementById("timeButton").disabled = true;
+        const timeOutBtn = document.createElement("button");
+        timeOutBtn.className = "btn btn-text";
+        timeOutBtn.innerText = "Time out";
+        timeOutBtn.onclick = timeOut;
+
+        timeOut.appendChild(timeOutBtn);
+      }
+      
+      row.append(timeIn, timeOut);
+      cardBody.appendChild(row);
+    })
+  
+    // Append card to DOM
+    container.appendChild(card);
+  })
 }
 
 function timeIn() {
+  console.log("timed");
+}
+
+function timeOut() {
   console.log("timed");
 }
 
@@ -208,51 +332,51 @@ function getToday() {
     cardBody.className = "card-body";
     
     card.appendChild(cardBody);
-
+  
     // Add name to card
     const name = document.createElement("h6");
     name.className = "card-title";
     name.innerText = data.name;
-
+  
     cardBody.appendChild(name);
-
+  
     // Create row
     const row = document.createElement("div");
     row.className = "row text-secondary";
-
+  
     cardBody.appendChild(row);
-
+  
     // Create column for time in and time out
     const time = document.createElement("div");
     time.className = "col-12 col-lg-6";
-
+  
     row.appendChild(time);
-
+  
     const timeTitle = document.createElement("p");
     timeTitle.innerText = "Time in - Time out:";
     time.appendChild(timeTitle);
-
+  
     // Fill the column with time data
     data.time.forEach (timeData => {
       const timeP = document.createElement("p");
       timeP.innerText = timeData;
-
+  
       time.appendChild(timeP);
     });
-
+  
     // Create column for duration
     const duration = document.createElement("div");
     duration.className = "col-12 col-lg-6";
-
+  
     row.appendChild(duration);
-
+  
     // Write the duration to column
     const durationData = document.createElement("p");
     durationData.className = "card-text";
     durationData.innerText = `Duration: ${data.duration}`;
-
+  
     duration.appendChild(durationData);
-
+  
     // Append card to DOM
     container.appendChild(card);
   });
@@ -265,12 +389,10 @@ function getAll() {
   container.innerHTML = "";
 
   // Get selected month
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  const options = document.getElementsByClassName("active-card");
-  const month = months.indexOf(toTitleCase(options[1].innerText));
+  const month = getSelectedMonth();
 
   // Get selected workspace
-  const workspace = options[0].innerText.split("\n")[0];
+  const workspace = getSelectedWorkplace();
 
   // Get data from dummy data
   // Filter by workspace
@@ -297,7 +419,7 @@ function getAll() {
     // Add name to card
     const name = document.createElement("h6");
     name.className = "card-title";
-    name.innerText = `${months[monthData.month]} ${monthData.date}`;
+    name.innerText = `${MONTHS[monthData.month]} ${monthData.date}`;
 
     cardBody.appendChild(name);
 
@@ -369,15 +491,6 @@ function getAll() {
     container.appendChild(card);
   });
 }
-
-
-// Updates UI of left sidebar
-document.querySelectorAll(".sidebar-left .card").forEach((card) => {
-  card.onclick = function() {
-    document.querySelector(".sidebar-left .active-card").className = "card";
-    card.className = "card active-card";
-  }
-})
 
 // Updates UI of right sidebar
 document.querySelectorAll(".sidebar-right .card").forEach((card) => {
