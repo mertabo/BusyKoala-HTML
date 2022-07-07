@@ -93,6 +93,7 @@ a,
 }
 a {
   text-decoration: none;
+  cursor: pointer;
 }
 a:hover,
 .btn-text:hover {
@@ -130,6 +131,7 @@ h3 {
 }
 h4 {
   text-transform: uppercase;
+  font-weight: 300;
 }
 h6,
 thead {
@@ -141,6 +143,9 @@ thead {
   background-color: #f5f5f5;
   border: 0;
 }
+.active-card .card-title {
+  font-weight: 700;
+}
 aside,
 .middle-container {
   height: calc(100vh - 77px);
@@ -149,13 +154,19 @@ aside,
 aside .card {
   width: 100%;
 }
+aside .card:hover {
+  background-color: #f0f0f0;
+}
 .card {
   border: 0;
 }
-.card button {
+.card button,
+#containerHeader a {
   border: 1px solid #58abdd;
+  margin-right: 5px;
 }
-.card button:hover {
+.card button:hover,
+#containerHeader a:hover {
   background-color: #58abdd;
   color: white;
 }
