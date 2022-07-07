@@ -101,9 +101,6 @@ function getEvents() {
   }
 }
 
-initCalendar();
-getEvents();
-
 // Create event
 function postEvent() {
   const title = document.getElementById("title").value;
@@ -113,7 +110,7 @@ function postEvent() {
   const month = date[1] - 1;
   const day = date[2] - 0;
 
-  // if (!title || !date) return;
+  if (!title || !date) return;
   
   // Title (Time @ Workspace)
   let newEvent = title;
@@ -131,25 +128,41 @@ function postEvent() {
     newEvent += ")";
   }
 
-  console.log(newEvent);
-
   // Find month
   if (calendar[month]) {
-    // Existing month
+    // Existing month, append data
     const monthData = calendar[month];
 
     // Find date
     if (monthData[day]) {
-      monthData[day].push("hello");
+      monthData[day].push(newEvent);
     } else {
-      monthData[day] = "hello";
+      monthData[day] = [newEvent];
     }
   } else {
-    // No month yet, create one
-
+    // No data for the month yet, create one
+    calendar[month] = {
+      [day]: [newEvent]
+    }
   }
 
-  // console
-  // console.log(title.value, parseInt(date.value.split("-")[1]), time.value, workplace.value);
-  // militaryToStandart(time.value);
+  // Add to calendar if event in currently presented month
+  if (month === getSelectedMonth()) {
+    const td = document.getElementById(day);
+    const p = document.createElement("p");
+    p.innerText = newEvent;
+    p["title"] = newEvent;
+      
+    td.appendChild(p);
+  }
 }
+
+initCalendar();
+getEvents();
+
+// Stop from reloading once form is submitted
+document.getElementById("postEventBtn").addEventListener("click", function(event){
+  if (document.getElementsByTagName("form")[0].checkValidity()) { 
+    event.preventDefault();
+  }
+});
