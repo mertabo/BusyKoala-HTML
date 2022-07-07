@@ -55,6 +55,7 @@ const workspaces = [
           {name: "Taylor Swift", user: "taytay",time: ["9:04 AM - 10:04 AM"], duration: "1hr"},
           {name: "Joe Keery", user: "steve",time: ["10:00 AM - 10:30 AM", "9:02 AM - 9:48 AM"], duration: "1hr 16mins"},
           {name: "Gaten Matarazzo", user: "dusty-bun",time: ["8:59 AM - 10:30 AM"], duration: "1hr 31mins"},
+          {name: "Ericka Tabo", user: "ericka",time: ["10:00 AM - 10:30 AM", "9:02 AM - 9:48 AM"], duration: "1hr 16mins"}
         ]
       },
     ]
@@ -93,6 +94,54 @@ function initToasts() {
     const bsToast = new bootstrap.Toast(toast);
     bsToast.show();
   }
+}
+
+function timeIn() {
+  console.log("timed");
+}
+
+function timeOut() {
+  // Get time now
+  const now = new Date().toLocaleString();
+  let time = now.split(", ")[1];
+  time = time.split(":");
+  time = `${time[0]}:${time[1]} ${time[2].slice(-2)}`;
+
+  // Update new time out
+  const newTimeOut = document.getElementById("timeOut");
+  newTimeOut.innerHTML = "";
+  newTimeOut.innerText = time;
+
+  // Get time in date
+  const timeInDate = document.getElementById("timeInDate").innerText;
+  
+  // Get time in
+  const timeInTime = document.getElementById("timeIn").innerText;
+  let start = timeInDate.split(", ");
+  const month = MONTHS.indexOf(start[0].split(" ")[0]) + 1;
+  const date =  start[0].split(" ")[1];
+  const year = start[1];
+  start = `${month}/${date}/${year}, ${timeInTime}`;
+
+  // Solve for the difference between time in time and time out time
+  let minutes = (new Date(now).getTime() - new Date(start).getTime()) / 60000;
+  const hours = Math.floor(minutes / 60);
+  minutes = Math.ceil(minutes % 60);
+
+  let newTime = "";
+
+  if (hours > 0) {
+    newTime += `${hours}hrs`;
+    if (minutes > 0) newTime += " ";
+  }
+  if (minutes > 0) newTime += `${minutes}mins`;
+
+  // Update new duration
+  const newDuration = document.getElementById("duration");
+  newDuration.innerText = `Duration: ${newTime}`;
+
+  // Enable Time in button
+  document.getElementById("timeButton").disabled = false;
 }
 
 // Returns the currently selected workplace
@@ -236,16 +285,16 @@ function getOtherWorkspace() {
       const row = document.createElement("div");
       row.className = "row text-secondary";
 
-      const timeIn = document.createElement("p");
-      timeIn.className = "col-12 col-lg-4";
-      timeIn.innerText = timeInOut[0];
+      const timeInData = document.createElement("p");
+      timeInData.className = "col-12 col-lg-4";
+      timeInData.innerText = timeInOut[0];
 
-      const timeOut = document.createElement("p");
-      timeOut.className = "col-12 col-lg-4";
+      const timeOutData = document.createElement("p");
+      timeOutData.className = "col-12 col-lg-4";
       
       // Check if there is an ongoing session that has not been timed out yet
       if (timeInOut[1]) {
-        timeOut.innerText = timeInOut[1];
+        timeOutData.innerText = timeInOut[1];
       } else {
         document.getElementById("timeButton").disabled = true;
         const timeOutBtn = document.createElement("button");
@@ -253,24 +302,22 @@ function getOtherWorkspace() {
         timeOutBtn.innerText = "Time out";
         timeOutBtn.onclick = timeOut;
 
-        timeOut.appendChild(timeOutBtn);
+        // Refs to update once Time out is clicked
+        timeOutData.id = "timeOut";
+        timeInData.id = "timeIn";
+        durationHeader.id = "duration";
+        name.id = "timeInDate"
+
+        timeOutData.appendChild(timeOutBtn);
       }
       
-      row.append(timeIn, timeOut);
+      row.append(timeInData, timeOutData);
       cardBody.appendChild(row);
     })
   
     // Append card to DOM
     container.appendChild(card);
   })
-}
-
-function timeIn() {
-  console.log("timed");
-}
-
-function timeOut() {
-  console.log("timed");
 }
 
 function getOwnWorkspace() {
@@ -287,8 +334,12 @@ function getOwnWorkspace() {
   todayItem.className = "nav-item";
 
   const todayLink = document.createElement("a");
-  todayLink.className = "nav-link";
-  todayLink.onclick = getToday;
+  todayLink.className = "nav-link active";
+  todayLink.onclick = function() {
+    document.querySelector("a.active").className = "nav-link";
+    todayLink.className = "nav-link active";
+    getToday();
+  };
   todayLink.innerText = "Today";
 
   todayItem.appendChild(todayLink);
@@ -299,7 +350,11 @@ function getOwnWorkspace() {
 
   const allLink = document.createElement("a");
   allLink.className = "nav-link";
-  allLink.onclick = getAll;
+  allLink.onclick = function() {
+    document.querySelector("a.active").className = "nav-link";
+    allLink.className = "nav-link active";
+    getAll();
+  };
   allLink.innerText = "All";
 
   allItem.appendChild(allLink);
@@ -308,9 +363,10 @@ function getOwnWorkspace() {
   header.insertBefore(allItem, header.firstChild);
   header.insertBefore(todayItem, header.firstChild);
   
-  // Configure the button whether "+ Time in" or "End session"
+  // Configure the button whether "Time in" or "End session"
   const timeBtn = document.getElementById("timeButton");
   timeBtn.innerText = "End session";
+  timeBtn.disabled = false;
   initToasts();
   
   getToday();
@@ -492,11 +548,19 @@ function getAll() {
   });
 }
 
-// Updates UI of right sidebar
+// Updates UI when clicking month
 document.querySelectorAll(".sidebar-right .card").forEach((card) => {
   card.onclick = function() {
     document.querySelector(".sidebar-right .active-card").className = "card";
     card.className = "card active-card";
+    
+    const inOwnWS = document.querySelector("a.active");
+    
+    if (inOwnWS) {
+      inOwnWS.click();
+    } else {
+      document.getElementsByClassName("active-card")[0].click();
+    }
   }
 })
 

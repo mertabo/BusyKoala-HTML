@@ -167,7 +167,8 @@ aside .card:hover {
   margin-right: 5px;
 }
 .card button:hover,
-#containerHeader a:hover {
+#containerHeader a:hover,
+#containerHeader a.active {
   background-color: #58abdd;
   color: white;
 }
