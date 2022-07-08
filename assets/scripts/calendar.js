@@ -1,3 +1,5 @@
+// Constants
+const WEEKDAYS = 7;
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const SHOWOFFCANVAS_MAXWINDOWSIZEPX = 991;
 
@@ -14,8 +16,8 @@ const calendar = {
   },
 }
 
-// Converts military time to standard form (13:01 -> 1:01 PM)
-function militaryToStandart(str) {
+// Converts time from military format to standard format
+function militaryToStandard(str) {
   const time = str.split(":");
   let result = parseInt(time[0] % 12);
   result = (result === 0 ? 12 : result) + ":" + time[1] + (time[0] >= 12 ? " PM" : " AM");
@@ -26,7 +28,7 @@ function militaryToStandart(str) {
 // Converts string to title case
 function toTitleCase(str) {
   return str.split(' ')
-   .map(w => w[0].toUpperCase() + w.substring(1).toLowerCase())
+   .map(word => word[0].toUpperCase() + word.substring(1).toLowerCase())
    .join(' ');
 }
 
@@ -38,9 +40,8 @@ function getSelectedMonth() {
   return selectedMonth;
 }
 
-function initCalendar() {
-  const WEEKDAYS = 7;
-  
+// Creates the table for calendar
+function initCalendar() {  
   // Get the selected month
   const selectedMonth = getSelectedMonth();
 
@@ -85,6 +86,7 @@ function initCalendar() {
   getEvents();
 }
 
+// Writes events to calendar
 function getEvents() {
   // Get the selected month
   const selectedMonth = getSelectedMonth();
@@ -108,10 +110,11 @@ function getEvents() {
   }
 }
 
-// Create event
+// Create event then writes to calendar
 function postEvent() {
   let title, date, time, workplace;
 
+  // Check which form (offcanvas or div) to refer to
   if (window.innerWidth <= SHOWOFFCANVAS_MAXWINDOWSIZEPX) {
     title = document.getElementById("titleOffcanvas").value;
     date = document.getElementById("dateOffcanvas").value.split("-");
@@ -127,16 +130,17 @@ function postEvent() {
   const month = date[1] - 1;
   const day = date[2] - 0;
 
+  // Title and date are required
   if (!title || !date) return;
   
-  // Title (Time @ Workspace)
+  // Format title to Title (Time @ Workspace)
   let newEvent = title;
 
   if (time || workplace) {
     newEvent += " (";
     
     if (time) { 
-      newEvent += militaryToStandart(time);
+      newEvent += militaryToStandard(time);
       if (workplace) { newEvent += " @"} 
     } 
     if (workplace) {
@@ -150,7 +154,7 @@ function postEvent() {
     // Existing month, append data
     const monthData = calendar[month];
 
-    // Find date
+    // Find date, append data
     if (monthData[day]) {
       monthData[day].push(newEvent);
     } else {

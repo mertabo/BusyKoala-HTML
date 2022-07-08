@@ -88,7 +88,9 @@ body {
 }
 a,
 .fa,
-.btn-text {
+.btn-text,
+h6,
+thead {
   color: #58abdd;
 }
 a {
@@ -100,6 +102,8 @@ a:hover,
 .active-link {
   color: #488fbb;
 }
+h1,
+h2,
 .active-link {
   font-weight: 900;
 }
@@ -119,12 +123,10 @@ a:hover,
 h1 {
   font-size: 40px; 
   line-height: 45px;
-  font-weight: 900;
 }
 h2 {
   font-size: 32px; 
   line-height: 36px;
-  font-weight: 900;
 }
 h3 {
   font-size: 24px;
@@ -135,17 +137,18 @@ h4 {
   font-weight: 300;
 }
 h6,
-thead {
+thead,
+.active-card .card-title {
   font-weight: 700;
-  color: #58abdd
 }
 .form-control,
 .active-card {
   background-color: #f5f5f5;
-  border: 0;
 }
-.active-card .card-title {
-  font-weight: 700;
+.card,
+.form-control,
+.active-card {
+  border: 0;
 }
 aside,
 .middle-container {
@@ -157,9 +160,6 @@ aside .card {
 }
 aside .card:hover {
   background-color: #f0f0f0;
-}
-.card {
-  border: 0;
 }
 .card button,
 #containerHeader a {
@@ -175,7 +175,6 @@ aside .card:hover {
 .scrollable-container {
   overflow-y: auto;
   height: 100%;
-  /* margin: 15px 0; */
 }
 
 /*
@@ -286,9 +285,11 @@ footer li {
 .sdbr-l-content {
   margin: 15px 0;
 }
+/* workspace */
 .sdbrLSCWS {
   height: calc(100% - 35.95px - 15px - 20px - 50px);
 }
+/* calendar */
 .sdbrLSCCal {
   height: calc(100% - 30px - 15px - 20px - 50px);
 }

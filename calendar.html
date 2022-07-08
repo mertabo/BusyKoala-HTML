@@ -17,6 +17,7 @@
   </head>
 
   <body class="inside-app">
+    <!-- Navbar -->
     <header>
       <nav class="navbar border-bottom fixed-top bg-white">
         <ul class="container-fluid my-3 mx-md-3">
@@ -28,6 +29,7 @@
             </ul>
           </li>
           <li>
+            <!-- Dropdown -->
             <div class="dropdown">
               <button class="user-icon navbar-text" data-initials="ET" data-bs-toggle="dropdown" aria-expanded="false" id="dropdownMenuButton"></button>
               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
@@ -48,16 +50,19 @@
 
     <div class="content">
       <div class="d-flex">
+        <!-- Offcanvas button (for <= 991px width screen sizes) -->
         <button class="btn border-end rounded-0 d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offCanvasWorkspaces" aria-controls="offCanvasWorkspaces">
           <i class="fa">></i>
         </button>
         
+        <!-- Offcanvas -->
         <div class="offcanvas offcanvas-start" tabindex="-1" id="offCanvasWorkspaces" aria-labelledby="offCanvasWorkspacesLabel">
           <div class="offcanvas-header">
             <h3 class="offcanvas-title" id="offCanvasWorkspacesLabel">Create an event</h3>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
           </div>
           <aside class="offcanvas-body">
+            <!-- Create even form -->
             <form class="sdbr-l-content sdbrLSCCal" id="eventFormOffcanvas">
               <div class="scrollable-container">
                 <div class="text-secondary mx-1">  
@@ -84,6 +89,8 @@
           </aside>
         </div>
 
+        <!-- Left sidebar (for > 991px width screen sizes) -->
+        <!-- Create event form -->
         <aside class="sidebar-left d-none d-lg-inline-block">
           <h3>Create an event</h3>
           <form class="sdbr-l-content sdbrLSCCal" id="eventForm">
@@ -111,6 +118,7 @@
           </form>
         </aside>
         
+        <!-- Middle container -->
         <section class="middle-container d-inline-block">
           <div class="scrollable-container">
             <table class="table">
@@ -131,6 +139,7 @@
           </div>
         </section>
         
+        <!-- Right sidebar -->
         <aside class="sidebar-right d-inline-block">
           <div class="scrollable-container">
             <button class="card">
@@ -199,7 +208,6 @@
     </div>
 
     <!-- Scripts -->
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="assets/scripts/calendar.js"></script>
   </body>

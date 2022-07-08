@@ -1,3 +1,4 @@
+// Constant
 const USER = "ericka";
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const SHOWOFFCANVAS_MAXWINDOWSIZEPX = 991;
@@ -94,21 +95,24 @@ const workspaces = [
 // Converts string to title case format
 function toTitleCase(str) {
   return str.split(' ')
-   .map(w => w[0].toUpperCase() + w.substring(1).toLowerCase())
+   .map(word => word[0].toUpperCase() + word.substring(1).toLowerCase())
    .join(' ');
 }
 
 // Initialize bootstrap toasts
-function initToasts(toggler, title, body) {
+function initToast(toggler, title, body) {
   toggler.onclick = function() {
     const toast = document.getElementById("liveToast");
     
+    // Write toast title
     const toastTitle = document.getElementsByClassName("toast-title")[0];
     toastTitle.innerText = title;
     
+    // Write toast content
     const toastBody = document.getElementsByClassName("toast-body")[0];
     toastBody.innerText = body;
 
+    // Show toast
     const bsToast = new bootstrap.Toast(toast);
     bsToast.show();
   }
@@ -146,26 +150,29 @@ function generateString(length) {
   return result;
 }
 
+// Copies invite link to clipboard then trigger toast to prompt user 
 function inviteLink() {
   const link = `https://busykoala.com/invite?code=${generateString(10)}`;
-  navigator.clipboard.writeText(link);
+  navigator.clipboard.writeText(link); // copy to clipboard
   const inviteBtn = document.getElementById("inviteButton");
-  initToasts(inviteBtn, "Session invite link", `Your session invite link (${link}) has been copied to your clipboard.`);
+  initToast(inviteBtn, "Session invite link", `Your session invite link (${link}) has been copied to your clipboard.`);
   inviteBtn.click();
 }
 
+// Trigger toast to prompt user a session started 
 function startSession() {
   const timeBtn = document.getElementById("timeButton");
   timeBtn.innerText = "End session";
-  initToasts(timeBtn, "Started session", "Session has started. Attendees can now time in.");
+  initToast(timeBtn, "Started session", "Session has started. Attendees can now time in.");
   timeBtn.click();
   timeBtn.onclick = endSession;
 }
 
+// Trigger toast to prompt user a session ended 
 function endSession() {
   const timeBtn = document.getElementById("timeButton");
   timeBtn.innerText = "Start session";
-  initToasts(timeBtn, "Ended session", "Session has ended. Attendees can no longer time in.");
+  initToast(timeBtn, "Ended session", "Session has ended. Attendees can no longer time in.");
   timeBtn.click();
   timeBtn.onclick = startSession;
 }
@@ -187,7 +194,7 @@ function timeOut() {
   newTimeOut.innerHTML = "";
   newTimeOut.innerText = time;
 
-  // Get time in date
+  // Get "time in" date
   const timeInDate = document.getElementById("timeInDate").innerText;
   
   // Get time in
@@ -205,7 +212,7 @@ function timeOut() {
   const newDuration = document.getElementById("duration");
   newDuration.innerText = `Duration: ${newTime}`;
 
-  // Enable Time in button
+  // Enable "Time in" button
   document.getElementById("timeButton").disabled = false;
 }
 
@@ -224,15 +231,14 @@ function getSelectedMonth() {
 
 // Get the workspaces and dynamically put to DOM
 function getWorkspaces() {
-  let container = document.getElementById("workspacesContainer");
-  const containerOffcanvas = document.getElementById("workspacesContainerOffcanvas");
-
-  if (window.innerWidth <= SHOWOFFCANVAS_MAXWINDOWSIZEPX) {
-    container = containerOffcanvas;
-  }
+  // Get container (offcanvas or div)
+  const container = document.getElementById(window.innerWidth <= SHOWOFFCANVAS_MAXWINDOWSIZEPX ? "workspacesContainerOffcanvas" : "workspacesContainer");
   
   // Ensure container is empty
   container.innerHTML = "";
+
+  // If no workspaces, no data to render
+  if (workspaces.length === 0) return;
 
   workspaces.forEach(workspace => {
     // Create card
@@ -264,6 +270,7 @@ function getWorkspaces() {
     container.appendChild(card);
   });
 
+  // Render first workspace data to DOM
   container.firstChild.className = "card active-card";
   container.firstChild.click();
 }
@@ -278,7 +285,7 @@ function getOtherWorkspace() {
     header.removeChild(header.firstChild);
   }
 
-  // Remove invite link
+  // Remove invite link button
   const inviteLinkContainer = document.querySelector("#containerHeader li.ms-auto");
   if (inviteLinkContainer.children.length >= 3) {
     inviteLinkContainer.removeChild(inviteLinkContainer.firstChild);
@@ -289,14 +296,14 @@ function getOtherWorkspace() {
   timeBtn.innerText = "Time in";
   timeBtn.onclick = timeIn;
   
+  // Clear container first
   const container = document.getElementById("midContentWSContainer");
-  
-  // Clear container by removing all cards
   container.innerHTML = "";
 
   // Get selected workspace
   const workspace = getSelectedWorkplace();
 
+  // If no workspace, do nothing
   if (!workspace) return;
 
   // Get selected month
@@ -330,7 +337,7 @@ function getOtherWorkspace() {
     
     card.appendChild(cardBody);
   
-    // Add name to card
+    // Add date to card
     const name = document.createElement("h6");
     name.className = "card-title";
     name.innerText = `${MONTHS[data.month]} ${data.date}, ${new Date().getFullYear()}`;
@@ -352,6 +359,7 @@ function getOtherWorkspace() {
     timeOutHeader.className = "col-12 col-sm-4";
     timeOutHeader.innerText = "Time out"
 
+    // Duration data
     const durationHeader = document.createElement("p");
     durationHeader.className = "col-12 col-sm-4";
     durationHeader.innerText = `Duration: ${hasData.duration}`;
@@ -365,10 +373,12 @@ function getOtherWorkspace() {
       const row = document.createElement("div");
       row.className = "row text-secondary mt-2";
 
+      // Time in data
       const timeInData = document.createElement("p");
       timeInData.className = "col-12 col-sm-4";
       timeInData.innerText = timeInOut[0];
 
+      // Time out data
       const timeOutData = document.createElement("p");
       timeOutData.className = "col-12 col-sm-4";
       
@@ -649,6 +659,7 @@ document.querySelectorAll(".sidebar-right .card").forEach((card) => {
     document.querySelector(".sidebar-right .active-card").className = "card";
     card.className = "card active-card";
     
+    // Tabs (All, Today) in own workspace DOM
     const inOwnWS = document.querySelector("a.active");
     
     if (inOwnWS) {
@@ -661,6 +672,7 @@ document.querySelectorAll(".sidebar-right .card").forEach((card) => {
 
 getWorkspaces();
 
+// Update DOM when window resizes
 window.addEventListener('resize', function(event) {
   getWorkspaces();
 }, true);

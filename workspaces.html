@@ -17,6 +17,7 @@
   </head>
 
   <body class="inside-app">
+    <!-- Navbar -->
     <header>
       <nav class="navbar border-bottom fixed-top bg-white">
         <ul class="container-fluid my-3 mx-md-3">
@@ -28,6 +29,7 @@
             </ul>
           </li>
           <li>
+            <!-- Dropdown -->
             <div class="dropdown">
               <button class="user-icon navbar-text" data-initials="ET" data-bs-toggle="dropdown" aria-expanded="false" id="dropdownMenuButton"></button>
               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
@@ -48,19 +50,23 @@
 
     <div class="content">
       <div class="d-flex">
+        <!-- Offcanvas button (for <= 991px width screen sizes) -->
         <button class="btn border-end rounded-0 d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offCanvasWorkspaces" aria-controls="offCanvasWorkspaces">
           <i class="fa">></i>
         </button>
         
+        <!-- Offcanvas -->
         <div class="offcanvas offcanvas-start" tabindex="-1" id="offCanvasWorkspaces" aria-labelledby="offCanvasWorkspacesLabel">
           <div class="offcanvas-header">
             <h3 class="offcanvas-title" id="offCanvasWorkspacesLabel">Workspaces</h3>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
           </div>
           <aside class="offcanvas-body">
+            <!-- Search bar -->
             <form>
               <input type="text" class="form-control rounded-pill" placeholder="Search">
             </form>
+            <!-- Workspaces -->
             <div class="sdbr-l-content sdbrLSCWS">
               <div class="scrollable-container" id="workspacesContainerOffcanvas">
               </div>
@@ -69,10 +75,13 @@
           </aside>
         </div>
 
+        <!-- Left sidebar (for > 991px width screen sizes) -->
         <aside class="sidebar-left d-none d-lg-inline-block">
+          <!-- Search bar -->
           <form>
             <input type="text" class="form-control rounded-pill" placeholder="Search">
           </form>
+          <!-- Workspaces -->
           <div class="sdbr-l-content sdbrLSCWS">
             <div class="scrollable-container" id="workspacesContainer">
             </div>
@@ -80,11 +89,12 @@
           <button class="btn btn-cta w-100">Create workspace</button>
         </aside>
         
+        <!-- Middle container -->
         <section class="middle-container d-inline-block">
           <ul class="nav nav-pills" id="containerHeader">
             <li class="nav-item ms-auto">
               <button class="btn btn-text" id="timeButton">Time in</button>
-
+              <!-- Toast -->
               <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
                 <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
                   <div class="toast-header">
@@ -96,6 +106,7 @@
               </div>
             </li>
           </ul>
+          <!-- Data container -->
           <div class="mid-content-workspace">
             <div class="scrollable-container">
               <div class="mx-2 my-3" id="midContentWSContainer">
@@ -104,6 +115,7 @@
           </div>
         </section>
         
+        <!-- Right sidebar -->
         <aside class="sidebar-right d-inline-block">
           <div class="scrollable-container">
             <button class="card">
