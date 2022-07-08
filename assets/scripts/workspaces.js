@@ -352,16 +352,16 @@ function getOtherWorkspace() {
   
     // Create column for time in, time out and duration
     const timeInHeader = document.createElement("p");
-    timeInHeader.className = "col-12 col-sm-4";
+    timeInHeader.className = "col-12 col-sm-4 order-2 order-sm-1";
     timeInHeader.innerText = "Time in"
     
     const timeOutHeader = document.createElement("p");
-    timeOutHeader.className = "col-12 col-sm-4";
+    timeOutHeader.className = "col-12 col-sm-4 order-3 order-sm-2";
     timeOutHeader.innerText = "Time out"
 
     // Duration data
     const durationHeader = document.createElement("p");
-    durationHeader.className = "col-12 col-sm-4";
+    durationHeader.className = "col-12 col-sm-4 order-1 order-sm-3";
     durationHeader.innerText = `Duration: ${hasData.duration}`;
   
     row.append(timeInHeader, timeOutHeader, durationHeader);

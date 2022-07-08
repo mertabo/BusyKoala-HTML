@@ -24,8 +24,8 @@
           <li><a class="navbar-brand" href="index.html">BusyKoala</a></li>
           <li>
             <ul class="d-md-flex nav-links d-none">
-              <li><a class="active-link" href="workspaces.html">Workspaces</a></li>
-              <li><a href="calendar.html">Calendar</a></li>
+              <li><a class="mx-3 active-link" href="workspaces.html">Workspaces</a></li>
+              <li><a class="mx-3" href="calendar.html">Calendar</a></li>
             </ul>
           </li>
           <li>
@@ -71,7 +71,7 @@
               <div class="scrollable-container" id="workspacesContainerOffcanvas">
               </div>
             </div>
-            <button class="btn btn-cta w-100">Create workspace</button>
+            <button class="btn btn-cta w-100" data-bs-toggle="modal" data-bs-target="#createWorkspaceModal" data-bs-dismiss="offcanvas">Create workspace</button>
           </aside>
         </div>
 
@@ -86,9 +86,82 @@
             <div class="scrollable-container" id="workspacesContainer">
             </div>
           </div>
-          <button class="btn btn-cta w-100">Create workspace</button>
+          <button class="btn btn-cta w-100" data-bs-toggle="modal" data-bs-target="#createWorkspaceModal">Create workspace</button>
         </aside>
-        
+
+        <!-- Create workspace modal -->
+        <div class="modal fade" id="createWorkspaceModal" tabindex="-1" aria-labelledby="createWorkspaceLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="createWorkspaceLabel">Create workspace</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="text-secondary mx-1"> 
+                    <!-- Title -->
+                    <div class="mb-3">
+                      <label for="title" class="form-label">Title</label>
+                      <input type="text" id="title" class="form-control" required>
+                    </div>
+                    <!-- Checkbox for days of the week -->
+                    <div class="mb-3">
+                      <label for="weekdays" class="form-label">During:</label>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="sundayBox">
+                        <label class="form-check-label" for="sundayBox">
+                          Sunday
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="mondayBox">
+                        <label class="form-check-label" for="mondayBox">
+                          Monday
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="tuesdayBox">
+                        <label class="form-check-label" for="tuesdayBox">
+                          Tuesday
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="wednesdayBox">
+                        <label class="form-check-label" for="wednesdayBox">
+                          Wednesday
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="thursdayBox">
+                        <label class="form-check-label" for="thursdayBox">
+                          Thursday
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="fridayBox">
+                        <label class="form-check-label" for="fridayBox">
+                          Friday
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="saturdayBox">
+                        <label class="form-check-label" for="saturdayBox">
+                          Saturday
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-text" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-cta">Create</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Middle container -->
         <section class="middle-container d-inline-block">
           <ul class="nav nav-pills" id="containerHeader">
