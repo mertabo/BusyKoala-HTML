@@ -1,6 +1,7 @@
 const USER = "ericka";
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
- 
+const SHOWOFFCANVAS_MAXWINDOWSIZEPX = 991;
+
 // Dummy data
 const attendeesToday = [
   {name: "Millie Bobby Brown", time: ["9:12 AM"], duration: "0mins"},
@@ -86,7 +87,6 @@ const workspaces = [
           {name: "Gaten Matarazzo", user: "dusty-bun",time: ["8:59 AM - 10:30 AM"], duration: "1hr 31mins"},
         ]
       },
-      
     ]
   },
 ];
@@ -190,20 +190,25 @@ function timeOut() {
 
 // Returns the currently selected workplace
 function getSelectedWorkplace() {
-  return document.getElementsByClassName("active-card")[0].innerText.split("\n")[0];
+  return document.querySelector(".active-card h5").innerHTML;
 }
 
 // Returns the currently selected month
 function getSelectedMonth() {
-  let selectedMonth = document.getElementsByClassName("active-card")[1];
-  selectedMonth = MONTHS.indexOf(toTitleCase(selectedMonth.innerText));
+  let selectedMonth = document.querySelector(".active-card h4").innerText;
+  selectedMonth = MONTHS.indexOf(toTitleCase(selectedMonth));
 
   return selectedMonth;
 }
 
 // Get the workspaces and dynamically put to DOM
 function getWorkspaces() {
-  const container = document.getElementById("workspacesContainer");
+  let container = document.getElementById("workspacesContainer");
+  const containerOffcanvas = document.getElementById("workspacesContainerOffcanvas");
+
+  if (window.innerWidth <= SHOWOFFCANVAS_MAXWINDOWSIZEPX) {
+    container = containerOffcanvas;
+  }
   
   // Ensure container is empty
   container.innerHTML = "";
@@ -213,7 +218,7 @@ function getWorkspaces() {
     const card = document.createElement("button");
     card.className = "card";
     card.onclick = function() {
-      document.querySelector(".sidebar-left .active-card").className = "card";
+      document.querySelector(".sdbr-l-content .active-card").className = "card";
       card.className = "card active-card";
       USER === workspace.owner ? getOwnWorkspace() : getOtherWorkspace();
     } 
@@ -265,6 +270,8 @@ function getOtherWorkspace() {
   // Get selected workspace
   const workspace = getSelectedWorkplace();
 
+  if (!workspace) return;
+
   // Get selected month
   const month = getSelectedMonth();
 
@@ -311,15 +318,15 @@ function getOtherWorkspace() {
   
     // Create column for time in, time out and duration
     const timeInHeader = document.createElement("p");
-    timeInHeader.className = "col-12 col-lg-4";
+    timeInHeader.className = "col-12 col-sm-4";
     timeInHeader.innerText = "Time in"
     
     const timeOutHeader = document.createElement("p");
-    timeOutHeader.className = "col-12 col-lg-4";
+    timeOutHeader.className = "col-12 col-sm-4";
     timeOutHeader.innerText = "Time out"
 
     const durationHeader = document.createElement("p");
-    durationHeader.className = "col-12 col-lg-4";
+    durationHeader.className = "col-12 col-sm-4";
     durationHeader.innerText = `Duration: ${hasData.duration}`;
   
     row.append(timeInHeader, timeOutHeader, durationHeader);
@@ -329,14 +336,14 @@ function getOtherWorkspace() {
       const timeInOut = data.split(" - ");
 
       const row = document.createElement("div");
-      row.className = "row text-secondary";
+      row.className = "row text-secondary mt-2";
 
       const timeInData = document.createElement("p");
-      timeInData.className = "col-12 col-lg-4";
+      timeInData.className = "col-12 col-sm-4";
       timeInData.innerText = timeInOut[0];
 
       const timeOutData = document.createElement("p");
-      timeOutData.className = "col-12 col-lg-4";
+      timeOutData.className = "col-12 col-sm-4";
       
       // Check if there is an ongoing session that has not been timed out yet
       if (timeInOut[1]) {
@@ -452,7 +459,7 @@ function getToday() {
   
     // Create column for time in and time out
     const time = document.createElement("div");
-    time.className = "col-12 col-lg-6";
+    time.className = "col-12 col-sm-6";
   
     row.appendChild(time);
   
@@ -470,7 +477,7 @@ function getToday() {
   
     // Create column for duration
     const duration = document.createElement("div");
-    duration.className = "col-12 col-lg-6";
+    duration.className = "col-12 col-sm-6";
   
     row.appendChild(duration);
   
@@ -549,15 +556,15 @@ function getAll() {
 
     // Create column for name, time in and time out, and duration
     const nameHeader = document.createElement("p");
-    nameHeader.className = "col-12 col-lg-4";
+    nameHeader.className = "col-12 col-sm-4";
     nameHeader.innerText = "Name";
 
     const timeHeader = document.createElement("p");
-    timeHeader.className = "col-12 col-lg-4";
+    timeHeader.className = "col-12 col-sm-4";
     timeHeader.innerText = "Time in - Time out";
 
     const durationHeader = document.createElement("p");
-    durationHeader.className = "col-12 col-lg-4";
+    durationHeader.className = "col-12 col-sm-4";
     durationHeader.innerText = "Duration";
 
     row.append(nameHeader, timeHeader, durationHeader);
@@ -572,12 +579,12 @@ function getAll() {
 
       // Write name
       const name = document.createElement("p");
-      name.className = "col-12 col-lg-4";
+      name.className = "col-12 col-sm-4";
       name.innerText = timeData.name;
 
       // Write time
       const time = document.createElement("div");
-      time.className = "col-12 col-lg-4";
+      time.className = "col-12 col-sm-4";
 
       timeData.time.forEach (timeN => {
         const timeP = document.createElement("p");
@@ -587,7 +594,7 @@ function getAll() {
 
       // Write duration
       const duration = document.createElement("p");
-      duration.className = "col-12 col-lg-4";
+      duration.className = "col-12 col-sm-4";
       duration.innerText = timeData.duration;
 
       row.append(name, time, duration);
@@ -614,3 +621,7 @@ document.querySelectorAll(".sidebar-right .card").forEach((card) => {
 })
 
 getWorkspaces();
+
+window.addEventListener('resize', function(event) {
+  getWorkspaces();
+}, true);

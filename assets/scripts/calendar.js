@@ -1,4 +1,5 @@
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const SHOWOFFCANVAS_MAXWINDOWSIZEPX = 991;
 
 // Dummy data
 const calendar = {
@@ -109,10 +110,20 @@ function getEvents() {
 
 // Create event
 function postEvent() {
-  const title = document.getElementById("title").value;
-  const date = document.getElementById("date").value.split("-");
-  const time = document.getElementById("time").value;
-  const workplace = document.getElementById("workplace").value;
+  let title, date, time, workplace;
+
+  if (window.innerWidth <= SHOWOFFCANVAS_MAXWINDOWSIZEPX) {
+    title = document.getElementById("titleOffcanvas").value;
+    date = document.getElementById("dateOffcanvas").value.split("-");
+    time = document.getElementById("timeOffcanvas").value;
+    workplace = document.getElementById("workplaceOffcanvas").value;
+  } else {
+    title = document.getElementById("title").value;
+    date = document.getElementById("date").value.split("-");
+    time = document.getElementById("time").value;
+    workplace = document.getElementById("workplace").value;
+  }
+
   const month = date[1] - 1;
   const day = date[2] - 0;
 
@@ -167,13 +178,18 @@ initCalendar();
 
 // Stop from reloading once form is submitted
 document.getElementById("postEventBtn").addEventListener("click", function(event){
-  if (document.getElementsByTagName("form")[0].checkValidity()) { 
+  if (document.getElementById("eventForm").checkValidity()) { 
+    event.preventDefault();
+  }
+});
+document.getElementById("postEventBtnOffcanvas").addEventListener("click", function(event){
+  if (document.getElementById("eventFormOffcanvas").checkValidity()) { 
     event.preventDefault();
   }
 });
 
 // Updates UI when clicking month
-document.querySelectorAll(".sidebar-right .card").forEach((card) => {
+document.querySelectorAll(".sidebar-right .card").forEach(card => {
   card.onclick = function() {
     document.querySelector(".sidebar-right .active-card").className = "card";
     card.className = "card active-card";

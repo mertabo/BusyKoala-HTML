@@ -48,11 +48,32 @@
 
     <div class="content">
       <div class="d-flex">
-        <aside class="sidebar-left d-inline-block">
+        <button class="btn border-end rounded-0 d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offCanvasWorkspaces" aria-controls="offCanvasWorkspaces">
+          <i class="fa">></i>
+        </button>
+        
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offCanvasWorkspaces" aria-labelledby="offCanvasWorkspacesLabel">
+          <div class="offcanvas-header">
+            <h3 class="offcanvas-title" id="offCanvasWorkspacesLabel">Workspaces</h3>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <aside class="offcanvas-body">
+            <form>
+              <input type="text" class="form-control rounded-pill" placeholder="Search">
+            </form>
+            <div class="sdbr-l-content sdbrLSCWS">
+              <div class="scrollable-container" id="workspacesContainerOffcanvas">
+              </div>
+            </div>
+            <button class="btn btn-cta w-100">Create workspace</button>
+          </aside>
+        </div>
+
+        <aside class="sidebar-left d-none d-lg-inline-block">
           <form>
             <input type="text" class="form-control rounded-pill" placeholder="Search">
           </form>
-          <div class="sdbr-l-content">
+          <div class="sdbr-l-content sdbrLSCWS">
             <div class="scrollable-container" id="workspacesContainer">
             </div>
           </div>
