@@ -22,13 +22,25 @@
         <ul class="container-fluid my-3 mx-md-3">
           <li><a class="navbar-brand" href="index.html">BusyKoala</a></li>
           <li>
-            <ul class="d-flex nav-links">
+            <ul class="d-md-flex nav-links d-none">
               <li><a href="workspaces.html">Workspaces</a></li>
               <li><a class="active-link" href="calendar.html">Calendar</a></li>
             </ul>
           </li>
           <li>
-            <button class="user-icon navbar-text" data-initials="ET"></button>
+            <div class="dropdown">
+              <button class="user-icon navbar-text" data-initials="ET" data-bs-toggle="dropdown" aria-expanded="false" id="dropdownMenuButton"></button>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                <li class="d-md-none">
+                  <ul>
+                    <li><a class="dropdown-item" href="workspaces.html">Workspaces</a></li>
+                    <li><a class="dropdown-item" href="calendar.html">Calendar</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                  </ul>
+                </li>
+                <li><a class="dropdown-item text-danger" href="index.html">Log out</a></li>
+              </ul>
+            </div>
           </li>
         </ul>
       </nav>
