@@ -1,10 +1,16 @@
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
 // Dummy data
 const calendar = {
+  7: {
+    7: ["Event (@Somewhere)"],
+    31: ["Yay"],
+  },
   6: {
     8: ["Sesh (10AM @ Exist Software Labs, Inc.)"],
     18: ["Birthday"],
     19: ["Gala", "Swimming"],
-  }
+  },
 }
 
 // Converts military time to standard form (13:01 -> 1:01 PM)
@@ -25,9 +31,8 @@ function toTitleCase(str) {
 
 // Returns the currently selected month
 function getSelectedMonth() {
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  let selectedMonth = document.getElementsByClassName("active-card")[0];
-  selectedMonth = months.indexOf(toTitleCase(selectedMonth.innerText));
+  let selectedMonth = document.querySelector(".active-card h4").innerText;
+  selectedMonth = MONTHS.indexOf(toTitleCase(selectedMonth));
 
   return selectedMonth;
 }
@@ -76,6 +81,7 @@ function initCalendar() {
       tr.appendChild(td);
     }
   }
+  getEvents();
 }
 
 function getEvents() {
@@ -158,7 +164,6 @@ function postEvent() {
 }
 
 initCalendar();
-getEvents();
 
 // Stop from reloading once form is submitted
 document.getElementById("postEventBtn").addEventListener("click", function(event){
@@ -166,3 +171,12 @@ document.getElementById("postEventBtn").addEventListener("click", function(event
     event.preventDefault();
   }
 });
+
+// Updates UI when clicking month
+document.querySelectorAll(".sidebar-right .card").forEach((card) => {
+  card.onclick = function() {
+    document.querySelector(".sidebar-right .active-card").className = "card";
+    card.className = "card active-card";
+    initCalendar();
+  }
+})
