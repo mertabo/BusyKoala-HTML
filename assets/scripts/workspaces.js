@@ -5,8 +5,8 @@ const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "
 const attendeesToday = [
   {name: "Millie Bobby Brown", time: ["9:12 AM"], duration: "0mins"},
   {name: "Taylor Swift", time: ["9:12 AM"], duration: "0mins"},
-  {name: "Gaten Matarazzo", time: ["9:11 AM - 9:54 AM"], duration: "0mins"},
-  {name: "Joe Keery", time: ["9:10 AM", "9:00 AM - 9:05 AM"], duration: "0mins"},
+  {name: "Gaten Matarazzo", time: ["9:11 AM - 9:54 AM"], duration: "43mins"},
+  {name: "Joe Keery", time: ["9:10 AM", "9:00 AM - 9:05 AM"], duration: "5mins"},
 ];
 
 const workspaces = [
@@ -17,13 +17,24 @@ const workspaces = [
     data: [
       {
         month: 6,
+        date: 8,
+        time: [
+          {name: "Millie Bobby Brown", user: "millaeh",time: ["9:05 AM - 10:30 AM"], duration: "1hr 25mins"},
+          {name: "Taylor Swift", user: "taytay",time: ["9:04 AM - 10:04 AM"], duration: "1hr"},
+          {name: "Joe Keery", user: "steve",time: ["10:00 AM - 10:30 AM", "9:02 AM - 9:48 AM"], duration: "1hr 16mins"},
+          {name: "Gaten Matarazzo", user: "dusty-bun",time: ["8:59 AM - 10:30 AM"], duration: "1hr 31mins"},
+          {name: "Ericka Tabo", user: "ericka",time: ["8:50 AM"], duration: "0mins"},
+        ]
+      },
+      {
+        month: 6,
         date: 3,
         time: [
           {name: "Millie Bobby Brown", user: "millaeh",time: ["9:05 AM - 10:30 AM"], duration: "1hr 25mins"},
           {name: "Taylor Swift", user: "taytay",time: ["9:04 AM - 10:04 AM"], duration: "1hr"},
           {name: "Joe Keery", user: "steve",time: ["10:00 AM - 10:30 AM", "9:02 AM - 9:48 AM"], duration: "1hr 16mins"},
           {name: "Gaten Matarazzo", user: "dusty-bun",time: ["8:59 AM - 10:30 AM"], duration: "1hr 31mins"},
-          {name: "Ericka Tabo", user: "ericka",time: ["10:46 AM", "8:59 AM - 10:30 AM"], duration: "1hr 31mins"},
+          {name: "Ericka Tabo", user: "ericka",time: ["10:46 AM - 11:00 AM", "8:59 AM - 10:30 AM"], duration: "1hr 45mins"},
         ]
       },
       {
@@ -80,7 +91,7 @@ const workspaces = [
   },
 ];
 
-
+// Converts string to title case format
 function toTitleCase(str) {
   return str.split(' ')
    .map(w => w[0].toUpperCase() + w.substring(1).toLowerCase())
@@ -88,18 +99,61 @@ function toTitleCase(str) {
 }
 
 // Initialize bootstrap toasts
-function initToasts() {
+function initToasts(title, body) {
   document.getElementById("timeButton").onclick = function() {
     const toast = document.getElementById("liveToast");
+    
+    const toastTitle = document.getElementsByClassName("toast-title")[0];
+    toastTitle.innerText = title;
+    
+    const toastBody = document.getElementsByClassName("toast-body")[0];
+    toastBody.innerText = body;
+
     const bsToast = new bootstrap.Toast(toast);
     bsToast.show();
   }
 }
 
-function timeIn() {
-  console.log("timed");
+// Returns duration between a start date and an end date in the format: 0hrs 0mins
+function getDurationFromDates(start, end) {
+  let newTime = "";
+
+  // Get hours and minutes
+  let minutes = (new Date(end).getTime() - new Date(start).getTime()) / 60000;
+  const hours = Math.floor(minutes / 60);
+  minutes = Math.floor(minutes % 60);
+
+  // Format new time
+  if (hours > 0) {
+    newTime += `${hours}hrs`;
+    if (minutes > 0) newTime += " ";
+  }
+  if (minutes > 0) newTime += `${minutes}mins`;
+
+  return newTime;
 }
 
+function startSession() {
+  const timeBtn = document.getElementById("timeButton");
+  timeBtn.innerText = "End session";
+  initToasts("Started session", "Session has started. Attendees can now time in.");
+  timeBtn.click();
+  timeBtn.onclick = endSession;
+}
+
+function endSession() {
+  const timeBtn = document.getElementById("timeButton");
+  timeBtn.innerText = "Start session";
+  initToasts("Ended session", "Session has ended. Attendees can no longer time in.");
+  timeBtn.click();
+  timeBtn.onclick = startSession;
+}
+
+function timeIn() {
+  console.log("Timed in");
+}
+
+// Updates time out and duration of the session timed out
 function timeOut() {
   // Get time now
   const now = new Date().toLocaleString();
@@ -124,17 +178,7 @@ function timeOut() {
   start = `${month}/${date}/${year}, ${timeInTime}`;
 
   // Solve for the difference between time in time and time out time
-  let minutes = (new Date(now).getTime() - new Date(start).getTime()) / 60000;
-  const hours = Math.floor(minutes / 60);
-  minutes = Math.ceil(minutes % 60);
-
-  let newTime = "";
-
-  if (hours > 0) {
-    newTime += `${hours}hrs`;
-    if (minutes > 0) newTime += " ";
-  }
-  if (minutes > 0) newTime += `${minutes}mins`;
+  let newTime = getDurationFromDates(start, now);
 
   // Update new duration
   const newDuration = document.getElementById("duration");
@@ -157,6 +201,7 @@ function getSelectedMonth() {
   return selectedMonth;
 }
 
+// Get the workspaces and dynamically put to DOM
 function getWorkspaces() {
   const container = document.getElementById("workspacesContainer");
   
@@ -197,6 +242,7 @@ function getWorkspaces() {
   container.firstChild.click();
 }
 
+// Initializes DOM if workspace.owner !== USER
 function getOtherWorkspace() {
   const header = document.getElementById("containerHeader");
 
@@ -320,6 +366,7 @@ function getOtherWorkspace() {
   })
 }
 
+// Initializes DOM if workspace.owner === USER
 function getOwnWorkspace() {
   const header = document.getElementById("containerHeader");
 
@@ -367,11 +414,12 @@ function getOwnWorkspace() {
   const timeBtn = document.getElementById("timeButton");
   timeBtn.innerText = "End session";
   timeBtn.disabled = false;
-  initToasts();
+  timeBtn.onclick = endSession;
   
   getToday();
 }
 
+// Fills the DOM with data of attendees today
 function getToday() {
   const container = document.getElementById("midContentWSContainer");
   
@@ -438,6 +486,7 @@ function getToday() {
   });
 }
 
+// Fills the DOM with data of attendance per day of the selected month
 function getAll() {
   const container = document.getElementById("midContentWSContainer");
   
