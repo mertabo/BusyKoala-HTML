@@ -99,8 +99,8 @@ function toTitleCase(str) {
 }
 
 // Initialize bootstrap toasts
-function initToasts(title, body) {
-  document.getElementById("timeButton").onclick = function() {
+function initToasts(toggler, title, body) {
+  toggler.onclick = function() {
     const toast = document.getElementById("liveToast");
     
     const toastTitle = document.getElementsByClassName("toast-title")[0];
@@ -133,10 +133,31 @@ function getDurationFromDates(start, end) {
   return newTime;
 }
 
+// Ref: https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
+function generateString(length) {
+  let result = "";
+  let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let charactersLength = characters.length;
+
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+
+  return result;
+}
+
+function inviteLink() {
+  const link = `https://busykoala.com/invite?code=${generateString(10)}`;
+  navigator.clipboard.writeText(link);
+  const inviteBtn = document.getElementById("inviteButton");
+  initToasts(inviteBtn, "Session invite link", `Your session invite link (${link}) has been copied to your clipboard.`);
+  inviteBtn.click();
+}
+
 function startSession() {
   const timeBtn = document.getElementById("timeButton");
   timeBtn.innerText = "End session";
-  initToasts("Started session", "Session has started. Attendees can now time in.");
+  initToasts(timeBtn, "Started session", "Session has started. Attendees can now time in.");
   timeBtn.click();
   timeBtn.onclick = endSession;
 }
@@ -144,7 +165,7 @@ function startSession() {
 function endSession() {
   const timeBtn = document.getElementById("timeButton");
   timeBtn.innerText = "Start session";
-  initToasts("Ended session", "Session has ended. Attendees can no longer time in.");
+  initToasts(timeBtn, "Ended session", "Session has ended. Attendees can no longer time in.");
   timeBtn.click();
   timeBtn.onclick = startSession;
 }
@@ -256,6 +277,12 @@ function getOtherWorkspace() {
     header.removeChild(header.firstChild);
     header.removeChild(header.firstChild);
   }
+
+  // Remove invite link
+  const inviteLinkContainer = document.querySelector("#containerHeader li.ms-auto");
+  if (inviteLinkContainer.children.length >= 3) {
+    inviteLinkContainer.removeChild(inviteLinkContainer.firstChild);
+  } 
   
   // Configure the button whether "Time in" or "End session"
   const timeBtn = document.getElementById("timeButton");
@@ -422,7 +449,19 @@ function getOwnWorkspace() {
   timeBtn.innerText = "End session";
   timeBtn.disabled = false;
   timeBtn.onclick = endSession;
-  
+
+  // Add invite link button
+  const inviteBtn = document.createElement("button");
+  inviteBtn.innerText = "Invite link";
+  inviteBtn.className = "btn btn-text";
+  inviteBtn.id = "inviteButton";
+  inviteBtn.onclick = inviteLink;
+
+  const insertHere = document.querySelector("#containerHeader li.ms-auto");
+  if (insertHere.children.length < 3) {
+    insertHere.insertBefore(inviteBtn, insertHere.firstChild);
+  } 
+
   getToday();
 }
 
